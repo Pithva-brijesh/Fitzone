@@ -1,5 +1,5 @@
-import DashboardHome from "./pages/dashboard-home";
+import Routes from "./Routes";
 
 export default function App() {
-  return <DashboardHome />;
+  return <Routes />;
 }
