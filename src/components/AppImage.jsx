@@ -1,28 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 
-export default function AppImage({
+function Image({
   src,
-  alt,
+  alt = "Image",
   className = "",
+  ...props
 }) {
-  const [error, setError] = useState(false);
-
-  if (error || !src) {
-    return (
-      <div
-        className={`flex items-center justify-center bg-gray-800 text-white ${className}`}
-      >
-        No Image
-      </div>
-    );
-  }
-
   return (
     <img
       src={src}
       alt={alt}
       className={className}
-      onError={() => setError(true)}
+      onError={(e) => {
+        e.target.onerror = null;
+        e.target.src =
+          "https://placehold.co/600x400?text=No+Image";
+      }}
+      {...props}
     />
   );
 }
+
+export default Image;

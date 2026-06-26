@@ -1,3 +1,3 @@
 export default function LoginAndRegistration() {
-  return <h1>Login and Registration</h1>;
+  return <h1>Login</h1>;
 }
