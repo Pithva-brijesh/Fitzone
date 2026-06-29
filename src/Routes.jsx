@@ -7,6 +7,7 @@ import ProgressTracker from "./pages/progress-tracker";
 import WorkoutSession from "./pages/workout-session";
 import LoginAndRegistration from "./pages/login-and-registration";
 import UserProfile from "./pages/user-profile";
+import Nutrition from "./pages/nutrition";
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -55,6 +56,11 @@ export default function AppRoutes() {
         <Route
           path="/user-profile"
           element={<UserProfile />}
+        />
+
+        <Route
+          path="/nutrition"
+          element={<Nutrition />}
         />
 
       </Routes>

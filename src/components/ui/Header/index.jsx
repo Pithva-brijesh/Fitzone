@@ -32,6 +32,12 @@ export default function Header({
       tooltip: "Exercises",
     },
     {
+      label: "Nutrition",
+      path: "/nutrition",
+      icon: "Apple",
+      tooltip: "Nutrition",
+    },
+    {
       label: "Progress",
       path: "/progress-tracker",
       icon: "TrendingUp",
@@ -53,16 +59,13 @@ export default function Header({
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-card border-b border-border">
-
+      <header className="sticky top-0 z-50 bg-card border-b border-border shadow-sm">
         <div className="max-w-7xl mx-auto h-16 px-6 flex items-center">
 
           {/* Logo */}
-
           <Logo />
 
           {/* Desktop Navigation */}
-
           <Navigation
             items={navigationItems}
             notifications={notifications}
@@ -70,7 +73,6 @@ export default function Header({
           />
 
           {/* Right Side */}
-
           <div className="ml-auto flex items-center gap-4">
 
             {!user ? (
@@ -84,11 +86,10 @@ export default function Header({
               <ProfileDropdown user={user} />
             )}
 
-            {/* Mobile */}
-
+            {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-muted"
+              className="md:hidden p-2 rounded-lg hover:bg-muted transition-colors"
             >
               <Icon
                 name={mobileOpen ? "X" : "Menu"}
@@ -99,9 +100,9 @@ export default function Header({
           </div>
 
         </div>
-
       </header>
 
+      {/* Mobile Navigation */}
       <MobileMenu
         open={mobileOpen}
         items={navigationItems}
