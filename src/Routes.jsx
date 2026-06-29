@@ -5,14 +5,29 @@ import ExerciseCatalog from "./pages/exercise-catalog";
 import ExerciseDetailsPage from "./pages/exercise-details";
 import ProgressTracker from "./pages/progress-tracker";
 import WorkoutSession from "./pages/workout-session";
-
+import LoginAndRegistration from "./pages/login-and-registration";
+import UserProfile from "./pages/user-profile";
 export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
+
+        {/* Authentication */}
+        <Route
+          path="/login"
+          element={<LoginAndRegistration />}
+        />
+
         {/* Dashboard */}
-        <Route path="/" element={<DashboardHome />} />
-        <Route path="/dashboard-home" element={<DashboardHome />} />
+        <Route
+          path="/"
+          element={<DashboardHome />}
+        />
+
+        <Route
+          path="/dashboard-home"
+          element={<DashboardHome />}
+        />
 
         {/* Exercise Pages */}
         <Route
@@ -36,6 +51,12 @@ export default function AppRoutes() {
           path="/workout-session"
           element={<WorkoutSession />}
         />
+
+        <Route
+          path="/user-profile"
+          element={<UserProfile />}
+        />
+
       </Routes>
     </BrowserRouter>
   );
