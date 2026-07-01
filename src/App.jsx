@@ -1,5 +1,7 @@
-import Routes from "./Routes";
+import AppRoutes from "./routes/AppRoutes";
 
-export default function App() {
-  return <Routes />;
+function App() {
+  return <AppRoutes />;
 }
+
+export default App;
