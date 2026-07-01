@@ -12,7 +12,7 @@ import Button from "../Button";
 export default function Header({
   user = null,
   notifications = {},
-  onNavigate = () => {},
+  onNavigate = () => { },
 }) {
   const navigate = useNavigate();
 
@@ -30,6 +30,12 @@ export default function Header({
       path: "/exercise-catalog",
       icon: "Dumbbell",
       tooltip: "Exercises",
+    },
+    {
+      label: "History",
+      path: "/workout-history",
+      icon: "History",
+      tooltip: "Workout History",
     },
     {
       label: "Nutrition",

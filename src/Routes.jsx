@@ -8,6 +8,7 @@ import WorkoutSession from "./pages/workout-session";
 import LoginAndRegistration from "./pages/login-and-registration";
 import UserProfile from "./pages/user-profile";
 import Nutrition from "./pages/nutrition";
+import WorkoutHistory from "./pages/workout-history";
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -61,6 +62,11 @@ export default function AppRoutes() {
         <Route
           path="/nutrition"
           element={<Nutrition />}
+        />
+
+        <Route
+          path="/workout-history"
+          element={<WorkoutHistory />}
         />
 
       </Routes>
