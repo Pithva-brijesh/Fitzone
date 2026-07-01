@@ -1,11 +1,53 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Button from "../../../components/ui/Button";
 import SocialLogin from "./SocialLogin";
 import Icon from "../../../components/AppIcon";
+import useAuth from "../../../hooks/useAuth";
 
 export default function RegisterForm({ onLogin }) {
+  const navigate = useNavigate();
+  const { register } = useAuth();
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    setError("");
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    if (!acceptedTerms) {
+      setError("Please accept the Terms of Service.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      await register(fullName, email, password);
+      navigate("/dashboard-home");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <div className="morphic-card bg-card border border-border rounded-3xl p-8">
@@ -18,7 +60,7 @@ export default function RegisterForm({ onLogin }) {
         Join FitZone and start your fitness journey today.
       </p>
 
-      <form className="space-y-5 mt-8">
+      <form onSubmit={handleSubmit} className="space-y-5 mt-8">
 
         {/* Full Name */}
 
@@ -38,6 +80,9 @@ export default function RegisterForm({ onLogin }) {
             <input
               type="text"
               placeholder="Enter your full name"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              required
               className="w-full bg-background border border-border rounded-xl pl-12 pr-4 py-3 text-foreground focus:outline-none focus:border-primary"
             />
 
@@ -62,6 +107,9 @@ export default function RegisterForm({ onLogin }) {
             <input
               type="email"
               placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
               className="w-full bg-background border border-border rounded-xl pl-12 pr-4 py-3 text-foreground focus:outline-none focus:border-primary"
             />
 
@@ -86,6 +134,9 @@ export default function RegisterForm({ onLogin }) {
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Create password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
               className="w-full bg-background border border-border rounded-xl pl-12 pr-12 py-3 text-foreground focus:outline-none focus:border-primary"
             />
 
@@ -122,6 +173,9 @@ export default function RegisterForm({ onLogin }) {
             <input
               type={showConfirm ? "text" : "password"}
               placeholder="Confirm password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
               className="w-full bg-background border border-border rounded-xl pl-12 pr-12 py-3 text-foreground focus:outline-none focus:border-primary"
             />
 
@@ -146,6 +200,8 @@ export default function RegisterForm({ onLogin }) {
 
           <input
             type="checkbox"
+            checked={acceptedTerms}
+            onChange={(e) => setAcceptedTerms(e.target.checked)}
             className="mt-1"
           />
 
@@ -156,20 +212,24 @@ export default function RegisterForm({ onLogin }) {
 
         </label>
 
-        {/* Register Button */}
+        {error && (
+          <div className="text-red-500 text-sm">
+            {error}
+          </div>
+        )}
 
         <Button
+          type="submit"
           className="w-full h-12 rounded-xl"
+          disabled={loading}
         >
-          Create Account
+          {loading ? "Creating Account..." : "Create Account"}
         </Button>
 
       </form>
 
       <div className="mt-8">
-
         <SocialLogin />
-
       </div>
 
       <div className="mt-8 text-center text-sm">
@@ -177,6 +237,7 @@ export default function RegisterForm({ onLogin }) {
         Already have an account?
 
         <button
+          type="button"
           onClick={onLogin}
           className="ml-2 text-primary font-semibold hover:underline"
         >

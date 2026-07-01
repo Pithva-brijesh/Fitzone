@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../../AppIcon";
+import useAuth from "../../../hooks/useAuth";
 
 export default function ProfileDropdown({ user }) {
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const [open, setOpen] = useState(false);
 
@@ -27,6 +29,15 @@ export default function ProfileDropdown({ user }) {
         handleClickOutside
       );
   }, []);
+
+  async function handleLogout() {
+    try {
+      await logout();
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout Error:", error);
+    }
+  }
 
   const menuItems = [
     {
@@ -61,12 +72,17 @@ export default function ProfileDropdown({ user }) {
         className="flex items-center gap-3 rounded-xl p-2 hover:bg-muted transition"
       >
         <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">
-          {user?.name?.charAt(0)?.toUpperCase() || "U"}
+          {user?.name?.charAt(0)?.toUpperCase() ||
+            user?.user_metadata?.full_name?.charAt(0)?.toUpperCase() ||
+            user?.email?.charAt(0)?.toUpperCase() ||
+            "U"}
         </div>
 
         <div className="hidden lg:block text-left">
           <h4 className="font-semibold text-foreground">
-            {user?.name}
+            {user?.name ||
+              user?.user_metadata?.full_name ||
+              "User"}
           </h4>
 
           <p className="text-xs text-muted-foreground">
@@ -86,7 +102,9 @@ export default function ProfileDropdown({ user }) {
           <div className="p-5 border-b border-border">
 
             <h3 className="font-bold text-lg">
-              {user?.name}
+              {user?.name ||
+                user?.user_metadata?.full_name ||
+                "User"}
             </h3>
 
             <p className="text-sm text-muted-foreground">
@@ -110,9 +128,7 @@ export default function ProfileDropdown({ user }) {
                 size={18}
               />
 
-              <span>
-                {item.title}
-              </span>
+              <span>{item.title}</span>
 
             </button>
 
@@ -121,6 +137,7 @@ export default function ProfileDropdown({ user }) {
           <div className="border-t border-border">
 
             <button
+              onClick={handleLogout}
               className="w-full flex items-center gap-3 px-5 py-4 text-red-500 hover:bg-red-500/10 transition"
             >
               <Icon

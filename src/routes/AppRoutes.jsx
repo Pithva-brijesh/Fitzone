@@ -1,4 +1,7 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+import useAuth from "../hooks/useAuth";
+import ProtectedRoute from "./ProtectedRoute";
 
 import DashboardHome from "../pages/dashboard-home";
 import ExerciseCatalog from "../pages/exercise-catalog";
@@ -12,79 +15,137 @@ import WorkoutHistory from "../pages/workout-history";
 import Achievements from "../pages/achievements";
 import Notifications from "../pages/notifications";
 import Settings from "../pages/settings";
+
+function PublicRoute() {
+  const { user, loading } = useAuth();
+
+  if (loading) return null;
+
+  return user ? (
+    <Navigate to="/dashboard-home" replace />
+  ) : (
+    <LoginAndRegistration />
+  );
+}
+
 export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
 
-        {/* Authentication */}
+        {/* Login */}
         <Route
           path="/login"
-          element={<LoginAndRegistration />}
+          element={<PublicRoute />}
         />
 
         {/* Dashboard */}
         <Route
           path="/"
-          element={<DashboardHome />}
+          element={
+            <ProtectedRoute>
+              <DashboardHome />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/dashboard-home"
-          element={<DashboardHome />}
+          element={
+            <ProtectedRoute>
+              <DashboardHome />
+            </ProtectedRoute>
+          }
         />
 
-        {/* Exercise Pages */}
         <Route
           path="/exercise-catalog"
-          element={<ExerciseCatalog />}
+          element={
+            <ProtectedRoute>
+              <ExerciseCatalog />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/exercise-details"
-          element={<ExerciseDetailsPage />}
+          element={
+            <ProtectedRoute>
+              <ExerciseDetailsPage />
+            </ProtectedRoute>
+          }
         />
 
-        {/* Progress Tracker */}
         <Route
           path="/progress-tracker"
-          element={<ProgressTracker />}
+          element={
+            <ProtectedRoute>
+              <ProgressTracker />
+            </ProtectedRoute>
+          }
         />
 
-        {/* Workout Session */}
         <Route
           path="/workout-session"
-          element={<WorkoutSession />}
+          element={
+            <ProtectedRoute>
+              <WorkoutSession />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/user-profile"
-          element={<UserProfile />}
+          element={
+            <ProtectedRoute>
+              <UserProfile />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/nutrition"
-          element={<Nutrition />}
+          element={
+            <ProtectedRoute>
+              <Nutrition />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/workout-history"
-          element={<WorkoutHistory />}
+          element={
+            <ProtectedRoute>
+              <WorkoutHistory />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/achievements"
-          element={<Achievements />}
+          element={
+            <ProtectedRoute>
+              <Achievements />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/notifications"
-          element={<Notifications />}
+          element={
+            <ProtectedRoute>
+              <Notifications />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/settings"
-          element={<Settings />}
+          element={
+            <ProtectedRoute>
+              <Settings />
+            </ProtectedRoute>
+          }
         />
 
       </Routes>

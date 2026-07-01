@@ -1,5 +1,8 @@
 import React from "react";
+
 import Header from "../../components/ui/Header";
+import useAuth from "../../hooks/useAuth";
+
 import PersonalizedGreeting from "./components/PersonalizedGreeting";
 import QuickStatsCard from "./components/QuickStatsCard";
 import TrendingContentCard from "./components/TrendingContentCard";
@@ -7,11 +10,6 @@ import RecentAchievements from "./components/RecentAchievements";
 import UpcomingChallenges from "./components/UpcomingChallenges";
 import QuickActions from "./components/QuickActions";
 import PersonalBadges from "./components/PersonalBadges";
-
-const user = {
-  name: "Alex",
-  level: 1,
-};
 
 const quote = {
   text: "Stay strong!",
@@ -33,7 +31,8 @@ const content = {
   type: "exercise",
   title: "HIIT Workout",
   description: "20-minute fat-burning HIIT session",
-  image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600",
+  image:
+    "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600",
   imageAlt: "Workout",
   likes: 1200,
   views: 5500,
@@ -93,19 +92,34 @@ const currentGoals = [
     current: 6,
     target: 10,
     unit: "kg",
-    deadline: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000),
+    deadline: new Date(
+      Date.now() + 20 * 24 * 60 * 60 * 1000
+    ),
   },
 ];
 
 export default function DashboardHome() {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+
+
+
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Header user={user} />
 
       <main className="container mx-auto p-6 space-y-6">
+
         <PersonalizedGreeting
           user={user}
-          streak={5}
+          streak={user?.user_metadata?.streak ?? 0}
           motivationalQuote={quote}
         />
 
@@ -134,9 +148,6 @@ export default function DashboardHome() {
           currentGoals={currentGoals}
         />
 
-        <h1 className="text-white text-3xl font-bold">
-          Dashboard Home Works
-        </h1>
       </main>
     </div>
   );
