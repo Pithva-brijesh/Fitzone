@@ -44,6 +44,12 @@ export default function Header({
       tooltip: "Nutrition",
     },
     {
+      label: "Achievements",
+      path: "/achievements",
+      icon: "Trophy",
+      tooltip: "Achievements",
+    },
+    {
       label: "Progress",
       path: "/progress-tracker",
       icon: "TrendingUp",
@@ -56,6 +62,7 @@ export default function Header({
       tooltip: "Profile",
     },
   ];
+
 
   const handleNavigate = (path) => {
     navigate(path);
