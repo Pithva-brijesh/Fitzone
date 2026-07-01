@@ -67,6 +67,11 @@ export default function Header({
       icon: "Bell",
       tooltip: "Notifications",
     },
+    {
+      label: "Settings",
+      path: "/settings",
+      icon: "Settings",
+    }
   ];
 
 

@@ -11,6 +11,7 @@ import Nutrition from "./pages/nutrition";
 import WorkoutHistory from "./pages/workout-history";
 import Achievements from "./pages/achievements";
 import Notifications from "./pages/notifications";
+import Settings from "./pages/settings";
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -79,6 +80,11 @@ export default function AppRoutes() {
         <Route
           path="/notifications"
           element={<Notifications />}
+        />
+
+        <Route
+          path="/settings"
+          element={<Settings />}
         />
 
       </Routes>
