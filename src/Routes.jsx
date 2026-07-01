@@ -10,6 +10,7 @@ import UserProfile from "./pages/user-profile";
 import Nutrition from "./pages/nutrition";
 import WorkoutHistory from "./pages/workout-history";
 import Achievements from "./pages/achievements";
+import Notifications from "./pages/notifications";
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -73,6 +74,11 @@ export default function AppRoutes() {
         <Route
           path="/achievements"
           element={<Achievements />}
+        />
+
+        <Route
+          path="/notifications"
+          element={<Notifications />}
         />
 
       </Routes>

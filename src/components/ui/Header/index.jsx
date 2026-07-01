@@ -61,6 +61,12 @@ export default function Header({
       icon: "User",
       tooltip: "Profile",
     },
+    {
+      label: "Notifications",
+      path: "/notifications",
+      icon: "Bell",
+      tooltip: "Notifications",
+    },
   ];
 
 
